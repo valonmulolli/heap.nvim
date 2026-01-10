@@ -1,0 +1,111 @@
+*heap.txt*	For Neovim version 0.8.0 or later.
+								   *heap-nvim*
+
+==============================================================================
+INTRODUCTION                                                   *heap-intro*
+
+Heap is a clean, modern dark theme for Neovim based on the VS Code Heap
+theme. It features two distinct variants designed for comfortable long-term
+coding with balanced contrast and vibrant accents.
+
+- heap: The standard dark variant (#121212 bg).
+- heap-dark: The premium Sea Green / Night Black variant (#09090b bg).
+
+==============================================================================
+INSTALLATION                                            *heap-installation*
+
+Using lazy.nvim:
+>lua
+    {
+      "valonmullolli/heap-nvim",
+      priority = 1000,
+      config = function()
+        vim.cmd.colorscheme('heap-dark')
+      end,
+    }
+<
+
+==============================================================================
+USAGE                                                          *heap-usage*
+
+Activate the themes using the |:colorscheme| command:
+>vim
+    colorscheme heap
+    colorscheme heap-dark
+<
+
+==============================================================================
+CONFIGURATION                                          *heap-configuration*
+
+Heap is highly customizable. Call the setup function BEFORE applying the
+colorscheme.
+
+>lua
+    require('heap').setup({
+      variant = "dark", -- "default" or "dark"
+      transparent = false,
+      cursorline = true,
+      plugins = {
+        telescope = true,
+        lazy = true,
+        mason = true,
+        snacks = true,
+        -- ... and more
+      },
+    })
+<
+
+OPTIONS                                                      *heap-options*
+
+- variant (string)
+    The theme variant to use ("default" or "dark"). Default: "default".
+    
+- transparent (boolean)
+    Set to true to enable background transparency throughout the UI.
+    Default: false.
+
+- sidebars (table)
+    List of filetypes that should use a sidebar background (like NvimTree).
+    Default: {}.
+
+- plugins (table)
+    Enable/disable specific plugin integrations. See |heap-plugins|.
+
+==============================================================================
+PLUGIN SUPPORT                                               *heap-plugins*
+
+Heap supports many popular plugins out of the box:
+
+- Lualine (separate theme files included)
+- Telescope
+- Gitsigns
+- Lazy.nvim / Mason.nvim
+- Snacks.nvim
+- Trouble
+- Noice
+- Mini.nvim (all modules)
+- Blink.cmp
+
+==============================================================================
+LUALINE                                                      *heap-lualine*
+
+To use the matching Lualine theme:
+>lua
+    require('lualine').setup({
+      options = {
+        theme = 'heap', -- auto-adapts to heap or heap-dark
+      },
+    })
+<
+
+==============================================================================
+AUTHORS                                                        *heap-authors*
+
+Created by Valon Mulolli.
+
+==============================================================================
+LICENSE                                                        *heap-license*
+
+MIT License. See LICENSE file in the repository.
+
+vim:tw=78:ts=8:ft=help:norl:
