@@ -1,0 +1,12 @@
+{
+  "diagnostics": {
+    "globals": ["vim", "describe", "it", "setup", "before_each", "after_each"]
+  },
+  "runtime": {
+    "version": "LuaJIT"
+  },
+  "workspace": {
+    "library": ["$VIMRUNTIME/lua/vim/lsp", "$VIMRUNTIME/lua"],
+    "checkThirdParty": false
+  }
+}

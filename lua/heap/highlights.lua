@@ -491,7 +491,11 @@ M.apply_plugin_highlights = function(colors, opts)
 		vim.api.nvim_set_hl(
 			0,
 			"TelescopePromptNormal",
-			{ fg = colors.fg, bg = get_custom_bg("telescope", highlight_utils.get_background_func(opts)(colors.tab_active_bg)) }
+			{
+				fg = colors.fg,
+				bg = get_custom_bg("telescope",
+					highlight_utils.get_background_func(opts)(colors.tab_active_bg))
+			}
 		)
 		vim.api.nvim_set_hl(0, "TelescopePromptBorder", {
 			fg = colors.keyword,
@@ -518,7 +522,11 @@ M.apply_plugin_highlights = function(colors, opts)
 		vim.api.nvim_set_hl(
 			0,
 			"TelescopeSelection",
-			{ fg = colors.fg, bg = get_custom_bg("telescope", highlight_utils.get_background_func(opts)(colors.selection_bg)) }
+			{
+				fg = colors.fg,
+				bg = get_custom_bg("telescope",
+					highlight_utils.get_background_func(opts)(colors.selection_bg))
+			}
 		)
 		vim.api.nvim_set_hl(0, "TelescopeMultiSelection", { fg = colors.keyword })
 		vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = colors.term_yellow, bold = true })
@@ -611,6 +619,31 @@ M.apply_plugin_highlights = function(colors, opts)
 		vim.api.nvim_set_hl(0, "NoiceSplit", { fg = colors.fg, bg = get_bg(colors.side_bar_bg) })
 		vim.api.nvim_set_hl(0, "NoiceSplitBorder", { fg = colors.keyword, bg = get_bg(colors.side_bar_bg) })
 		vim.api.nvim_set_hl(0, "NoiceVirtualText", { fg = colors.comment })
+	end
+
+	-- Notify support (nvim-notify)
+	if opts.plugins and opts.plugins.notify ~= false then
+		vim.api.nvim_set_hl(0, "NotifyBackground", { bg = colors.bg })
+		vim.api.nvim_set_hl(0, "NotifyERRORBorder", { fg = colors.invalid })
+		vim.api.nvim_set_hl(0, "NotifyWARNBorder", { fg = colors.term_yellow })
+		vim.api.nvim_set_hl(0, "NotifyINFOBorder", { fg = colors.term_blue })
+		vim.api.nvim_set_hl(0, "NotifyDEBUGBorder", { fg = colors.comment })
+		vim.api.nvim_set_hl(0, "NotifyTRACEBorder", { fg = colors.comment })
+		vim.api.nvim_set_hl(0, "NotifyERRORIcon", { fg = colors.invalid })
+		vim.api.nvim_set_hl(0, "NotifyWARNIcon", { fg = colors.term_yellow })
+		vim.api.nvim_set_hl(0, "NotifyINFOIcon", { fg = colors.term_blue })
+		vim.api.nvim_set_hl(0, "NotifyDEBUGIcon", { fg = colors.comment })
+		vim.api.nvim_set_hl(0, "NotifyTRACEIcon", { fg = colors.comment })
+		vim.api.nvim_set_hl(0, "NotifyERRORTitle", { fg = colors.invalid })
+		vim.api.nvim_set_hl(0, "NotifyWARNTitle", { fg = colors.term_yellow })
+		vim.api.nvim_set_hl(0, "NotifyINFOTitle", { fg = colors.term_blue })
+		vim.api.nvim_set_hl(0, "NotifyDEBUGTitle", { fg = colors.comment })
+		vim.api.nvim_set_hl(0, "NotifyTRACETitle", { fg = colors.comment })
+		vim.api.nvim_set_hl(0, "NotifyERRORBody", { fg = colors.fg })
+		vim.api.nvim_set_hl(0, "NotifyWARNBody", { fg = colors.fg })
+		vim.api.nvim_set_hl(0, "NotifyINFOBody", { fg = colors.fg })
+		vim.api.nvim_set_hl(0, "NotifyDEBUGBody", { fg = colors.fg })
+		vim.api.nvim_set_hl(0, "NotifyTRACEBody", { fg = colors.fg })
 	end
 
 	-- Mini.nvim components support
@@ -790,6 +823,26 @@ M.apply_custom_highlights = function(opts)
 	end
 end
 
+-- Apply terminal colors
+M.apply_terminal_colors = function(colors)
+	vim.g.terminal_color_0 = colors.term_black
+	vim.g.terminal_color_1 = colors.term_red
+	vim.g.terminal_color_2 = colors.term_green
+	vim.g.terminal_color_3 = colors.term_yellow
+	vim.g.terminal_color_4 = colors.term_blue
+	vim.g.terminal_color_5 = colors.term_magenta
+	vim.g.terminal_color_6 = colors.term_cyan
+	vim.g.terminal_color_7 = colors.term_white
+	vim.g.terminal_color_8 = colors.term_bright_black
+	vim.g.terminal_color_9 = colors.term_bright_red
+	vim.g.terminal_color_10 = colors.term_bright_green
+	vim.g.terminal_color_11 = colors.term_bright_yellow
+	vim.g.terminal_color_12 = colors.term_bright_blue
+	vim.g.terminal_color_13 = colors.term_bright_magenta
+	vim.g.terminal_color_14 = colors.term_bright_cyan
+	vim.g.terminal_color_15 = colors.term_bright_white
+end
+
 -- Apply all highlights for a theme
 M.apply_all_highlights = function(colors, opts)
 	M.apply_editor_highlights(colors, opts)
@@ -802,6 +855,7 @@ M.apply_all_highlights = function(colors, opts)
 	M.apply_nvim_tree_highlights(colors, opts)
 	M.apply_bufferline_highlights(colors, opts)
 	M.apply_plugin_highlights(colors, opts)
+	M.apply_terminal_colors(colors)
 	M.apply_custom_highlights(opts)
 end
 

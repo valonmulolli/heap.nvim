@@ -131,8 +131,8 @@ M.dark_colors = {
 	-- Dark Gray: #1e1e1e (panels)
 
 	-- Base Colors
-	bg = "#09090b", 
-	fg = "#ffffff", -- Pure White (Requested for normal text)
+	bg = "#09090b",
+	fg = "#ffffff",   -- Pure White (Requested for normal text)
 	fg_dark = "#808080", -- Gray
 
 	-- UI Elements
@@ -140,27 +140,27 @@ M.dark_colors = {
 	side_bar_bg = "#09090b", -- Night Black (seamless)
 	tab_active_bg = "#1e1e1e", -- Dark Gray
 	tab_inactive_bg = "#09090b",
-	
+
 	-- Status Line
 	status_bg = "#09090b",
 	status_fg = "#ffffff", -- Pure White
 
 	-- Editor UI
-	cursor_fg = "#3fb6a6", -- Teal Accent
-	line_number_fg = "#4a4a4a", -- Dimmed Gray
+	cursor_fg = "#3fb6a6",          -- Teal Accent
+	line_number_fg = "#4a4a4a",     -- Dimmed Gray
 	line_number_active_fg = "#6eafad", -- Sea Green
-	selection_bg = "#1e1e1e", -- Dark Gray
-	selection_fg = "#d5d5d5", -- Light Gray
+	selection_bg = "#254147",       -- Deep Teal/Slate (High visibility)
+	selection_fg = "#d5d5d5",       -- Light Gray
 	bracket_match_bg = "#1e1e1e",
 	bracket_match_border = "#6eafad", -- Sea Green
 	indent_guide_bg = "#151515",
 	indent_guide_active_bg = "#3fb6a6",
 
 	-- Git (Mapped to Chartreuse/Teal/Red)
-	git_added = "#3fb6a6",    -- Teal Accent
+	git_added = "#3fb6a6", -- Teal Accent
 	git_modified = "#dfff00", -- Chartreuse
-	git_deleted = "#e06c75",  -- Soft Red (kept standard for semantic safety)
-	diff_added = "#3fb6a6",    
+	git_deleted = "#e06c75", -- Soft Red (kept standard for semantic safety)
+	diff_added = "#3fb6a6",
 	diff_removed = "#e06c75",
 
 	-- Git Decorations
@@ -191,21 +191,21 @@ M.dark_colors = {
 	term_bright_white = "#ffffff",
 
 	-- Syntax Highlighting
-	comment = "#8996a3",     -- Slate-gray
-	string = "#eaf0e5",      -- Soft Mint
+	comment = "#8996a3",       -- Slate-gray
+	string = "#eaf0e5",        -- Soft Mint
 	string_escape = "#6eafad", -- Sea Green
-	number = "#3fb6a6",      -- Teal Accent
+	number = "#3fb6a6",        -- Teal Accent
 	constant_builtin = "#3fb6a6", -- Teal Accent
-	constant_user = "#dfff00",    -- Chartreuse
-	variable = "#e3ecf6",    -- Soft Blue
-	keyword = "#6eafad",     -- Sea Green (Primary brand color)
-	storage = "#3fb6a6",     -- Teal Accent
-	storage_type = "#8996a3", -- Slate-gray
-	class_name = "#eaf0e5",  -- Soft Mint
+	constant_user = "#dfff00", -- Chartreuse
+	variable = "#e3ecf6",      -- Soft Blue
+	keyword = "#6eafad",       -- Sea Green (Primary brand color)
+	storage = "#3fb6a6",       -- Teal Accent
+	storage_type = "#8996a3",  -- Slate-gray
+	class_name = "#eaf0e5",    -- Soft Mint
 	function_name = "#d5d5d5", -- Light Gray (High readability)
 	variable_start = "#6eafad",
 	embedded = "#6eafad",
-	tag = "#6eafad",         -- Sea Green
+	tag = "#6eafad",        -- Sea Green
 	tag_start_end = "#808080",
 	tag_attribute = "#dfff00", -- Chartreuse
 	library_function = "#3fb6a6",
@@ -220,18 +220,18 @@ M.dark_colors = {
 	markdown_list = "#dfff00",
 	markdown_italic = "#8996a3",
 	punctuation = "#808080", -- Gray
-	operators = "#6eafad",   -- Sea Green
-	property = "#c0c0c0",    -- Silver
-	parameter = "#c0c0c0",   -- Silver
+	operators = "#6eafad", -- Sea Green
+	property = "#c0c0c0",  -- Silver
+	parameter = "#c0c0c0", -- Silver
 	private_property = "#808080",
 	control_flow = "#dfff00", -- Chartreuse (Pop for flow control)
-	
+
 	-- Misc
 	bracket_fg_1 = "#6eafad",
 	bracket_fg_2 = "#3fb6a6",
 	bracket_fg_3 = "#dfff00",
 	bracket_unexpected = "#e06c75",
-	
+
 	-- Theme UI consistency
 	title_active_bg = "#09090b",
 	title_active_fg = "#dfff00", -- Chartreuse (Pop)
