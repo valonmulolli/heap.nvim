@@ -12,6 +12,9 @@ M.apply_editor_highlights = function(colors, opts)
 
 	-- Editor UI highlights
 	vim.api.nvim_set_hl(0, "Normal", { fg = colors.fg, bg = get_custom_bg("normal", colors.bg) })
+	vim.api.nvim_set_hl(0, "NormalNC", { fg = colors.fg, bg = get_custom_bg("normal", colors.bg) })
+	vim.api.nvim_set_hl(0, "TermCursor", { fg = colors.bg, bg = colors.cursor_fg })
+	vim.api.nvim_set_hl(0, "TermCursorNC", { fg = colors.bg, bg = colors.cursor_fg })
 	-- Visual highlight (ensure it's visible even in transparent mode)
 	-- Check if user has set a custom visual background
 	local custom_visual_bg = opts.tweak_background and opts.tweak_background.visual
@@ -798,6 +801,71 @@ M.apply_plugin_highlights = function(colors, opts)
 	vim.api.nvim_set_hl(0, "VertSplit", { fg = colors.activity_bg })
 	vim.api.nvim_set_hl(0, "FloatShadow", { bg = colors.bg, blend = 80 })
 	vim.api.nvim_set_hl(0, "FloatShadowThrough", { bg = colors.bg, blend = 100 })
+
+	-- LSP Inlay Hints (Neovim 0.10+)
+	vim.api.nvim_set_hl(0, "LspInlayHint", { fg = colors.comment, bg = get_bg(colors.tab_active_bg), italic = true })
+
+	-- render-markdown.nvim support
+	if opts.plugins and opts.plugins.render_markdown ~= false then
+		vim.api.nvim_set_hl(0, "RenderMarkdownH1", { fg = colors.term_cyan, bold = true })
+		vim.api.nvim_set_hl(0, "RenderMarkdownH2", { fg = colors.keyword, bold = true })
+		vim.api.nvim_set_hl(0, "RenderMarkdownH3", { fg = colors.term_yellow, bold = true })
+		vim.api.nvim_set_hl(0, "RenderMarkdownH4", { fg = colors.term_green, bold = true })
+		vim.api.nvim_set_hl(0, "RenderMarkdownH5", { fg = colors.term_blue, bold = true })
+		vim.api.nvim_set_hl(0, "RenderMarkdownH6", { fg = colors.term_magenta, bold = true })
+		vim.api.nvim_set_hl(0, "RenderMarkdownCode", { bg = get_bg(colors.tab_active_bg) })
+		vim.api.nvim_set_hl(0, "RenderMarkdownCodeInline", { fg = colors.string, bg = get_bg(colors.tab_active_bg) })
+		vim.api.nvim_set_hl(0, "RenderMarkdownBullet", { fg = colors.term_yellow })
+		vim.api.nvim_set_hl(0, "RenderMarkdownCheckedBox", { fg = colors.term_green })
+		vim.api.nvim_set_hl(0, "RenderMarkdownUncheckedBox", { fg = colors.term_yellow })
+		vim.api.nvim_set_hl(0, "RenderMarkdownQuote", { fg = colors.comment, italic = true })
+		vim.api.nvim_set_hl(0, "RenderMarkdownLink", { fg = colors.markdown_link, underline = true })
+		vim.api.nvim_set_hl(0, "RenderMarkdownTableHead", { fg = colors.keyword, bold = true })
+		vim.api.nvim_set_hl(0, "RenderMarkdownTableRow", { fg = colors.fg })
+	end
+
+	-- fzf-lua support
+	if opts.plugins and opts.plugins.fzf_lua ~= false then
+		vim.api.nvim_set_hl(0, "FzfLuaNormal", { fg = colors.fg, bg = get_bg(colors.side_bar_bg) })
+		vim.api.nvim_set_hl(0, "FzfLuaBorder", { fg = colors.keyword, bg = get_bg(colors.side_bar_bg) })
+		vim.api.nvim_set_hl(0, "FzfLuaTitle", { fg = colors.sidebar_title_fg, bold = true })
+		vim.api.nvim_set_hl(0, "FzfLuaPreviewNormal", { fg = colors.fg, bg = get_bg(colors.bg) })
+		vim.api.nvim_set_hl(0, "FzfLuaPreviewBorder", { fg = colors.comment, bg = get_bg(colors.bg) })
+		vim.api.nvim_set_hl(0, "FzfLuaCursor", { fg = colors.bg, bg = colors.keyword })
+		vim.api.nvim_set_hl(0, "FzfLuaCursorLine", { bg = get_bg(colors.selection_bg) })
+		vim.api.nvim_set_hl(0, "FzfLuaSearch", { fg = colors.term_yellow, bold = true })
+		vim.api.nvim_set_hl(0, "FzfLuaHeaderBind", { fg = colors.term_cyan })
+		vim.api.nvim_set_hl(0, "FzfLuaHeaderText", { fg = colors.comment })
+	end
+
+	-- oil.nvim support
+	if opts.plugins and opts.plugins.oil ~= false then
+		vim.api.nvim_set_hl(0, "OilDir", { fg = colors.term_cyan, bold = true })
+		vim.api.nvim_set_hl(0, "OilDirIcon", { fg = colors.term_cyan })
+		vim.api.nvim_set_hl(0, "OilFile", { fg = colors.fg })
+		vim.api.nvim_set_hl(0, "OilLink", { fg = colors.keyword, underline = true })
+		vim.api.nvim_set_hl(0, "OilLinkTarget", { fg = colors.comment })
+		vim.api.nvim_set_hl(0, "OilCopy", { fg = colors.term_green })
+		vim.api.nvim_set_hl(0, "OilMove", { fg = colors.term_yellow })
+		vim.api.nvim_set_hl(0, "OilChange", { fg = colors.git_decoration_modified })
+		vim.api.nvim_set_hl(0, "OilCreate", { fg = colors.git_decoration_added })
+		vim.api.nvim_set_hl(0, "OilDelete", { fg = colors.git_decoration_deleted })
+		vim.api.nvim_set_hl(0, "OilPermissionNone", { fg = colors.fg_dark })
+		vim.api.nvim_set_hl(0, "OilPermissionRead", { fg = colors.term_yellow })
+		vim.api.nvim_set_hl(0, "OilPermissionWrite", { fg = colors.term_red })
+		vim.api.nvim_set_hl(0, "OilPermissionExecute", { fg = colors.term_green })
+		vim.api.nvim_set_hl(0, "OilTypeDir", { fg = colors.term_cyan })
+		vim.api.nvim_set_hl(0, "OilTypeFile", { fg = colors.fg })
+		vim.api.nvim_set_hl(0, "OilTypeLink", { fg = colors.keyword })
+	end
+
+	-- harpoon2 support
+	if opts.plugins and opts.plugins.harpoon ~= false then
+		vim.api.nvim_set_hl(0, "HarpoonWindow", { fg = colors.fg, bg = get_bg(colors.side_bar_bg) })
+		vim.api.nvim_set_hl(0, "HarpoonBorder", { fg = colors.keyword, bg = get_bg(colors.side_bar_bg) })
+		vim.api.nvim_set_hl(0, "HarpoonTitle", { fg = colors.sidebar_title_fg, bold = true })
+		vim.api.nvim_set_hl(0, "HarpoonCurrentFile", { fg = colors.term_green, bold = true })
+	end
 
 	-- Additional Treesitter captures
 	vim.api.nvim_set_hl(0, "@text.todo.checked", { fg = colors.term_green })

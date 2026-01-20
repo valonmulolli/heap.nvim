@@ -24,6 +24,13 @@ M.default_options = {
 		lazy = true,
 		mason = true,
 		snacks = true,
+		notify = true,
+		render_markdown = true,
+		fzf_lua = true,
+		oil = true,
+		harpoon = true,
+		nvim_tree = true,
+		bufferline = true,
 	},
 
 	-- Advanced customization options

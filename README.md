@@ -1,5 +1,7 @@
 # Heap for Neovim
 
+[![CI](https://github.com/valonmulolli/heap-nvim/actions/workflows/ci.yml/badge.svg)](https://github.com/valonmulolli/heap-nvim/actions/workflows/ci.yml)
+
 A clean, modern, and vibrant dark theme for Neovim 
 
 ### Heap (Default)
@@ -15,7 +17,17 @@ A clean, modern, and vibrant dark theme for Neovim
   - `heap-dark`: A premium sea green/black variant with deep contrast.
 - **Vibrant Statusline**: Custom Lualine themes with high-visibility mode indicators.
 - **Transparency Support**: Simple toggle for a fully transparent UI.
-- **Modern Plugin Support**: Treesitter, Telescope, Gitsigns, Lazy, Mason, Snacks, Blink.cmp, and more.
+- **LSP Inlay Hints**: Native Neovim 0.10+ inlay hint support.
+- **Modern Plugin Support**: 
+  - **Core**: Treesitter, LSP, Diagnostics
+  - **Fuzzy Finders**: Telescope, fzf-lua
+  - **File Explorers**: NvimTree, Neo-tree, Oil.nvim
+  - **Completion**: Blink.cmp, nvim-cmp
+  - **UI**: Lualine, Bufferline, Noice, nvim-notify, Snacks
+  - **Git**: Gitsigns, Diffview
+  - **Navigation**: Harpoon, Flash
+  - **Markdown**: render-markdown.nvim
+  - **Other**: Lazy, Mason, Which-key, Trouble, Mini.nvim
 
 ## Installation
 
