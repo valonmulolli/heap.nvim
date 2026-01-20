@@ -1,24 +1,18 @@
 # Heap for Neovim
 
-[![CI](https://github.com/valonmulolli/heap-nvim/actions/workflows/ci.yml/badge.svg)](https://github.com/valonmulolli/heap-nvim/actions/workflows/ci.yml)
+A clean, modern, and vibrant dark theme for Neovim
 
-A clean, modern, and vibrant dark theme for Neovim 
-
-### Heap (Default)
-![Heap Default](./heap.jpg)
-
-### Heap Dark
-![Heap Dark](./heap-dark.jpg)
+![Heap Themes](./heap&heap-dark.jpg)
 
 ## Features
 
-- **Two Variants**: 
+- **Two Variants**:
   - `heap`: The classic teal dark theme.
   - `heap-dark`: A premium sea green/black variant with deep contrast.
 - **Vibrant Statusline**: Custom Lualine themes with high-visibility mode indicators.
 - **Transparency Support**: Simple toggle for a fully transparent UI.
 - **LSP Inlay Hints**: Native Neovim 0.10+ inlay hint support.
-- **Modern Plugin Support**: 
+- **Modern Plugin Support**:
   - **Core**: Treesitter, LSP, Diagnostics
   - **Fuzzy Finders**: Telescope, fzf-lua
   - **File Explorers**: NvimTree, Neo-tree, Oil.nvim
@@ -57,7 +51,7 @@ require('heap').setup({
   variant = "default",      -- "default" or "dark"
   transparent = false,      -- Enable transparency
   cursorline = true,        -- Toggle cursorline
-  
+
   -- Fine-tune specific UI behaviors
   tweak_ui = {
     enable_end_of_buffer = true, -- Hide the '~' at the end of buffers
@@ -88,3 +82,4 @@ require('lualine').setup({
 ## License
 
 MIT License. See [LICENSE](./LICENSE) for details.
+
