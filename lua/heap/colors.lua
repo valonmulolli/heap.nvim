@@ -117,19 +117,6 @@ M.default_colors = {
 
 -- Define the dark theme color palette
 M.dark_colors = {
-	-- User Provided Palette
-	-- Night Black: #09090b (bg)
-	-- Sea Green: #6eafad (primary accent)
-	-- Teal Accent: #3fb6a6 (secondary accent)
-	-- Chartreuse: #dfff00 (pop/warning)
-	-- Soft Mint: #eaf0e5 (strings/neutral)
-	-- Soft Blue: #e3ecf6 (cool neutral)
-	-- Silver: #c0c0c0 (text)
-	-- Light Gray: #d5d5d5 (highlight text)
-	-- Slate-gray: #8996a3 (comments)
-	-- Gray: #808080 (ui elements)
-	-- Dark Gray: #1e1e1e (panels)
-
 	-- Base Colors
 	bg = "#09090b",
 	fg = "#ffffff",   -- Pure White (Requested for normal text)
