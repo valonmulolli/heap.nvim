@@ -29,7 +29,7 @@ A clean, modern, and vibrant dark theme for Neovim
 
 ```lua
 {
-  "valonmullolli/heap-nvim",
+  "valonmulolli/heap.nvim",
   priority = 1000,
   config = function()
     -- Optional: run setup before loading the colorscheme
@@ -37,7 +37,7 @@ A clean, modern, and vibrant dark theme for Neovim
       variant = "dark", -- "default" or "dark"
       transparent = false,
     })
-    vim.cmd.colorscheme('heap-dark')
+    vim.cmd.colorscheme('heap')
   end,
 }
 ```
