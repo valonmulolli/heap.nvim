@@ -34,7 +34,7 @@ A clean, modern, and vibrant dark theme for Neovim
   config = function()
     -- Optional: run setup before loading the colorscheme
     require('heap').setup({
-      variant = "dark", -- "default" or "dark"
+      variant = "default", -- "default" or "dark"
       transparent = false,
     })
     vim.cmd.colorscheme('heap-dark')
