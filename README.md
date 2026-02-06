@@ -37,7 +37,7 @@ A clean, modern, and vibrant dark theme for Neovim
       variant = "dark", -- "default" or "dark"
       transparent = false,
     })
-    vim.cmd.colorscheme('heap')
+    vim.cmd.colorscheme('heap-dark')
   end,
 }
 ```
