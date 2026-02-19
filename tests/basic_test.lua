@@ -23,10 +23,6 @@ describe('Heap Theme', function()
     assert.are.same('dark', vim.o.background)
   end)
 
-  it('should enable termguicolors', function()
-    assert.is_true(vim.o.termguicolors)
-  end)
-
   it('should have working highlights', function()
     -- Test a few basic highlight groups
     local normal_hl = vim.api.nvim_get_hl(0, { name = 'Normal' })

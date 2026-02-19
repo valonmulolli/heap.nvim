@@ -18,7 +18,7 @@ A clean, modern, and vibrant dark theme for Neovim
   - **File Explorers**: NvimTree, Neo-tree, Oil.nvim
   - **Completion**: Blink.cmp, nvim-cmp
   - **UI**: Lualine, Bufferline, Noice, nvim-notify, Snacks
-  - **Git**: Gitsigns, Diffview
+  - **Git**: Gitsigns
   - **Navigation**: Harpoon, Flash
   - **Markdown**: render-markdown.nvim
   - **Other**: Lazy, Mason, Which-key, Trouble, Mini.nvim
@@ -29,7 +29,7 @@ A clean, modern, and vibrant dark theme for Neovim
 
 ```lua
 {
-  "valonmulolli/heap.nvim",
+  "valonmulolli/heap-nvim",
   priority = 1000,
   config = function()
     -- Optional: run setup before loading the colorscheme
@@ -61,7 +61,7 @@ require('heap').setup({
   -- Enable/disable specific plugin integrations
   plugins = {
     telescope = true,
-    lualine = true,
+    bufferline = true,
     -- ... most popular plugins are true by default
   }
 })
@@ -74,7 +74,9 @@ To use the matching vibrant Lualine theme:
 ```lua
 require('lualine').setup({
   options = {
-    theme = 'heap', -- This automatically adapts to your active variant
+    -- Use 'heap' for :colorscheme heap
+    -- Use 'heap-dark' for :colorscheme heap-dark
+    theme = 'heap',
   }
 })
 ```
@@ -82,4 +84,3 @@ require('lualine').setup({
 ## License
 
 MIT License. See [LICENSE](./LICENSE) for details.
-

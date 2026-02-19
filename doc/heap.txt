@@ -17,7 +17,7 @@ INSTALLATION                                            *heap-installation*
 Using lazy.nvim:
 >lua
     {
-      "valonmullolli/heap-nvim",
+      "valonmulolli/heap-nvim",
       priority = 1000,
       config = function()
         vim.cmd.colorscheme('heap-dark')
@@ -64,9 +64,9 @@ OPTIONS                                                      *heap-options*
     Set to true to enable background transparency throughout the UI.
     Default: false.
 
-- sidebars (table)
-    List of filetypes that should use a sidebar background (like NvimTree).
-    Default: {}.
+- tweak_background (table)
+    Fine-grained background overrides (for example: normal, menu, telescope).
+    Use value "none" to force transparency for a target.
 
 - plugins (table)
     Enable/disable specific plugin integrations. See |heap-plugins|.
@@ -93,7 +93,8 @@ To use the matching Lualine theme:
 >lua
     require('lualine').setup({
       options = {
-        theme = 'heap', -- auto-adapts to heap or heap-dark
+        theme = 'heap',      -- for :colorscheme heap
+        -- theme = 'heap-dark', -- for :colorscheme heap-dark
       },
     })
 <
