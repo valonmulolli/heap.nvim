@@ -244,6 +244,22 @@ M.apply_treesitter_highlights = function(colors, opts)
 		["@text.note"] = { fg = colors.term_cyan },
 		["@text.warning"] = { fg = colors.term_yellow },
 		["@text.danger"] = { fg = colors.term_red },
+		-- Neovim 0.11+ markdown capture names
+		["@markup"] = { fg = colors.fg },
+		["@markup.strong"] = { fg = colors.markdown_italic, bold = true },
+		["@markup.italic"] = { fg = colors.markdown_italic, italic = true },
+		["@markup.underline"] = { underline = true },
+		["@markup.strikethrough"] = { strikethrough = true },
+		["@markup.heading"] = { fg = colors.markdown_heading, bold = true },
+		["@markup.raw"] = { fg = colors.string },
+		["@markup.quote"] = { fg = colors.comment },
+		["@markup.math"] = { fg = colors.number },
+		["@markup.environment"] = { fg = colors.tag },
+		["@markup.environment.name"] = { fg = colors.tag },
+		["@markup.link"] = { fg = colors.markdown_link, underline = true },
+		["@markup.link.url"] = { fg = colors.markdown_link, underline = true },
+		["@markup.link.label"] = { fg = colors.markdown_link },
+		["@markup.list"] = { fg = colors.markdown_list },
 		["@type"] = { fg = colors.storage_type },
 		["@type.builtin"] = { fg = colors.library_type },
 		["@variable"] = { fg = colors.variable },
@@ -366,7 +382,7 @@ M.apply_completion_highlights = function(colors, opts)
 		CmpItemKindProperty = { fg = colors.property },
 		CmpItemKindUnit = { fg = colors.number },
 		CmpItemKindValue = { fg = colors.constant_builtin },
-		CmpItemKindEnum = { fg = colors.type },
+		CmpItemKindEnum = { fg = colors.storage_type },
 		CmpItemKindKeyword = { fg = colors.keyword },
 		CmpItemKindSnippet = { fg = colors.tag },
 		CmpItemKindColor = { fg = colors.term_cyan },
@@ -375,10 +391,10 @@ M.apply_completion_highlights = function(colors, opts)
 		CmpItemKindFolder = { fg = colors.term_blue },
 		CmpItemKindEnumMember = { fg = colors.constant_builtin },
 		CmpItemKindConstant = { fg = colors.constant_builtin },
-		CmpItemKindStruct = { fg = colors.type },
+		CmpItemKindStruct = { fg = colors.storage_type },
 		CmpItemKindEvent = { fg = colors.keyword },
 		CmpItemKindOperator = { fg = colors.operators },
-		CmpItemKindTypeParameter = { fg = colors.type },
+		CmpItemKindTypeParameter = { fg = colors.storage_type },
 	}
 
 	for hl_name, hl_def in pairs(completion_highlights) do
@@ -388,6 +404,10 @@ end
 
 -- Apply telescope highlights
 M.apply_telescope_highlights = function(colors, opts)
+	if opts.plugins and opts.plugins.telescope == false then
+		return
+	end
+
 	local get_custom_bg = function(element_type, default_bg)
 		return highlight_utils.get_custom_bg(opts, element_type, default_bg)
 	end
@@ -746,7 +766,7 @@ M.apply_plugin_highlights = function(colors, opts)
 		vim.api.nvim_set_hl(0, "BlinkCmpKindProperty", { fg = colors.property })
 		vim.api.nvim_set_hl(0, "BlinkCmpKindUnit", { fg = colors.number })
 		vim.api.nvim_set_hl(0, "BlinkCmpKindValue", { fg = colors.constant_builtin })
-		vim.api.nvim_set_hl(0, "BlinkCmpKindEnum", { fg = colors.type })
+		vim.api.nvim_set_hl(0, "BlinkCmpKindEnum", { fg = colors.storage_type })
 		vim.api.nvim_set_hl(0, "BlinkCmpKindKeyword", { fg = colors.keyword })
 		vim.api.nvim_set_hl(0, "BlinkCmpKindSnippet", { fg = colors.tag })
 		vim.api.nvim_set_hl(0, "BlinkCmpKindColor", { fg = colors.term_cyan })
@@ -755,10 +775,10 @@ M.apply_plugin_highlights = function(colors, opts)
 		vim.api.nvim_set_hl(0, "BlinkCmpKindFolder", { fg = colors.term_blue })
 		vim.api.nvim_set_hl(0, "BlinkCmpKindEnumMember", { fg = colors.constant_builtin })
 		vim.api.nvim_set_hl(0, "BlinkCmpKindConstant", { fg = colors.constant_builtin })
-		vim.api.nvim_set_hl(0, "BlinkCmpKindStruct", { fg = colors.type })
+		vim.api.nvim_set_hl(0, "BlinkCmpKindStruct", { fg = colors.storage_type })
 		vim.api.nvim_set_hl(0, "BlinkCmpKindEvent", { fg = colors.keyword })
 		vim.api.nvim_set_hl(0, "BlinkCmpKindOperator", { fg = colors.operators })
-		vim.api.nvim_set_hl(0, "BlinkCmpKindTypeParameter", { fg = colors.type })
+		vim.api.nvim_set_hl(0, "BlinkCmpKindTypeParameter", { fg = colors.storage_type })
 		vim.api.nvim_set_hl(0, "BlinkCmpSource", { fg = colors.comment })
 		vim.api.nvim_set_hl(0, "BlinkCmpGhostText", { fg = colors.comment })
 	end
@@ -872,6 +892,8 @@ M.apply_plugin_highlights = function(colors, opts)
 	vim.api.nvim_set_hl(0, "@text.todo.unchecked", { fg = colors.term_yellow })
 	vim.api.nvim_set_hl(0, "@text.diff.add", { fg = colors.git_decoration_added })
 	vim.api.nvim_set_hl(0, "@text.diff.delete", { fg = colors.git_decoration_deleted })
+	vim.api.nvim_set_hl(0, "@markup.list.checked", { fg = colors.term_green })
+	vim.api.nvim_set_hl(0, "@markup.list.unchecked", { fg = colors.term_yellow })
 
 	-- Additional LSP semantic highlights
 	vim.api.nvim_set_hl(0, "@lsp.mod.defaultLibrary", { fg = colors.library_function })

@@ -6,12 +6,11 @@ local M = {}
 local colors = require("heap.colors")
 local highlights = require("heap.highlights")
 local config = require("heap.config")
-local highlight_utils = require("heap.highlight_utils")
 
 -- Set highlights for editor UI elements
 M.set_highlights = function()
 	local opts = M.options or config.default_options
-	
+
 	-- Select palette based on variant
 	local palette = colors.default_colors
 	if opts.variant == "dark" then
@@ -29,43 +28,24 @@ M.set_highlights = function()
 end
 
 M.setup = function(opts)
-	-- Validate and merge options
-	if opts and type(opts) ~= "table" then
-		error("heap.setup: options must be a table or nil")
-	end
+	config.validate_options(opts)
+	local forced_non_transparent_specified = opts and opts.forced_non_transparent ~= nil or false
 
 	-- 1. Determine current options state (if any)
 	local current_opts = M.options or {}
-	
-	-- 2. Deep merge: NEW opts override CURRENT opts which override DEFAULTS
-	-- This behavior is achieved by merge_options returning a fresh copy starting from defaults,
-	-- so we apply it twice or smartly.
-	
-	-- First, merge CURRENT user-set options into defaults
-	local base_opts = config.merge_options(current_opts)
-	
-	-- Then, merge the NEW setup(opts) call into those base options
-	-- We do this manually because config.merge_options always starts from M.default_options
-	if opts then
-		for k, v in pairs(opts) do
-			if type(v) == "table" and type(base_opts[k]) == "table" then
-				for sub_k, sub_v in pairs(v) do
-					base_opts[k][sub_k] = sub_v
-				end
-			else
-				base_opts[k] = v
-			end
-		end
-	end
 
-	opts = base_opts
+	-- 2. Deep merge NEW opts over CURRENT opts, then merge into defaults.
+	local merged_user_opts = vim.tbl_deep_extend("force", current_opts, opts or {})
+	opts = config.merge_options(merged_user_opts)
 
 	-- Apply variant-specific defaults
 	if opts.variant == "dark" then
 		-- Heap Dark defaults to non-transparent for richness, unless explicitly disabled
-		if opts.forced_non_transparent == nil and opts.transparent == false then
+		if not forced_non_transparent_specified and opts.transparent == false then
 			opts.forced_non_transparent = true
 		end
+	elseif not forced_non_transparent_specified then
+		opts.forced_non_transparent = false
 	end
 
 	-- Initialize Neovim state for the colorscheme

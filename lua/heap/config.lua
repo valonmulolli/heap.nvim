@@ -6,9 +6,7 @@ M.default_options = {
 	variant = "default", -- "default" or "dark"
 	transparent = false,
 	transparent_background = false,
-	forced_non_transparent = false,
 	cursorline = true,
-	sidebars = {},
 	plugins = {
 		telescope = true,
 		which_key = true,
@@ -39,6 +37,56 @@ M.default_options = {
 	tweak_ui = {},
 	tweak_highlight = {},
 }
+
+local function assert_table_or_nil(value, name)
+	if value ~= nil and type(value) ~= "table" then
+		error("heap.setup: `" .. name .. "` must be a table")
+	end
+end
+
+local function assert_boolean_or_nil(value, name)
+	if value ~= nil and type(value) ~= "boolean" then
+		error("heap.setup: `" .. name .. "` must be a boolean")
+	end
+end
+
+-- Validate user options before merge/apply.
+M.validate_options = function(user_opts)
+	if user_opts == nil then
+		return
+	end
+	if type(user_opts) ~= "table" then
+		error("heap.setup: options must be a table or nil")
+	end
+
+	if user_opts.variant ~= nil and user_opts.variant ~= "default" and user_opts.variant ~= "dark" then
+		error("heap.setup: `variant` must be \"default\" or \"dark\"")
+	end
+
+	assert_boolean_or_nil(user_opts.transparent, "transparent")
+	assert_boolean_or_nil(user_opts.transparent_background, "transparent_background")
+	assert_boolean_or_nil(user_opts.forced_non_transparent, "forced_non_transparent")
+	assert_boolean_or_nil(user_opts.cursorline, "cursorline")
+
+	assert_table_or_nil(user_opts.tweak_background, "tweak_background")
+	assert_table_or_nil(user_opts.tweak_syntax, "tweak_syntax")
+	assert_table_or_nil(user_opts.tweak_ui, "tweak_ui")
+	assert_table_or_nil(user_opts.tweak_highlight, "tweak_highlight")
+
+	if user_opts.plugins ~= nil then
+		if type(user_opts.plugins) ~= "table" then
+			error("heap.setup: `plugins` must be a table")
+		end
+		for plugin_name, enabled in pairs(user_opts.plugins) do
+			if type(plugin_name) ~= "string" then
+				error("heap.setup: plugin names must be strings")
+			end
+			if type(enabled) ~= "boolean" then
+				error("heap.setup: plugin `" .. plugin_name .. "` must be a boolean")
+			end
+		end
+	end
+end
 
 -- Merge custom configuration with defaults
 M.merge_options = function(user_opts)
