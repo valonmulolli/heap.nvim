@@ -7,6 +7,8 @@ M.default_options = {
 	transparent = false,
 	transparent_background = false,
 	cursorline = true,
+	auto = true,
+	cache = true,
 	plugins = {
 		telescope = true,
 		which_key = true,
@@ -29,6 +31,7 @@ M.default_options = {
 		harpoon = true,
 		nvim_tree = true,
 		bufferline = true,
+		zignite = true,
 	},
 
 	-- Advanced customization options
@@ -37,6 +40,20 @@ M.default_options = {
 	tweak_ui = {},
 	tweak_highlight = {},
 }
+
+M.options = vim.deepcopy(M.default_options)
+
+local function deep_copy(value)
+	if type(value) ~= "table" then
+		return value
+	end
+
+	local copied = {}
+	for key, item in pairs(value) do
+		copied[key] = deep_copy(item)
+	end
+	return copied
+end
 
 local function assert_table_or_nil(value, name)
 	if value ~= nil and type(value) ~= "table" then
@@ -67,6 +84,8 @@ M.validate_options = function(user_opts)
 	assert_boolean_or_nil(user_opts.transparent_background, "transparent_background")
 	assert_boolean_or_nil(user_opts.forced_non_transparent, "forced_non_transparent")
 	assert_boolean_or_nil(user_opts.cursorline, "cursorline")
+	assert_boolean_or_nil(user_opts.auto, "auto")
+	assert_boolean_or_nil(user_opts.cache, "cache")
 
 	assert_table_or_nil(user_opts.tweak_background, "tweak_background")
 	assert_table_or_nil(user_opts.tweak_syntax, "tweak_syntax")
@@ -90,16 +109,6 @@ end
 
 -- Merge custom configuration with defaults
 M.merge_options = function(user_opts)
-	-- Deep copy helper
-	local function deep_copy(t)
-		if type(t) ~= 'table' then return t end
-		local copy = {}
-		for k, v in pairs(t) do
-			copy[k] = deep_copy(v)
-		end
-		return copy
-	end
-
 	-- Deep merge helper
 	local function deep_merge(target, source)
 		for k, v in pairs(source) do
@@ -121,6 +130,25 @@ M.merge_options = function(user_opts)
 	end
 
 	return options
+end
+
+M.setup = function(user_opts)
+	M.validate_options(user_opts)
+
+	local opts = M.merge_options(user_opts)
+	local forced_non_transparent_specified = user_opts and user_opts.forced_non_transparent ~= nil or false
+
+	-- Heap Dark defaults to non-transparent unless explicitly configured otherwise.
+	if opts.variant == "dark" then
+		if not forced_non_transparent_specified and opts.transparent == false then
+			opts.forced_non_transparent = true
+		end
+	elseif not forced_non_transparent_specified then
+		opts.forced_non_transparent = false
+	end
+
+	M.options = opts
+	return opts
 end
 
 -- Apply syntax customizations to colors

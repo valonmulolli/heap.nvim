@@ -1,4 +1,4 @@
-*heap.txt*	For Neovim version 0.8.0 or later.
+*heap.txt*	For Neovim version 0.10.0 or later.
 								   *heap-nvim*
 
 ==============================================================================
@@ -45,6 +45,8 @@ colorscheme.
       variant = "dark", -- "default" or "dark"
       transparent = false,
       cursorline = true,
+      auto = true,  -- auto-detect installed plugins
+      cache = true, -- cache detection results
       plugins = {
         telescope = true,
         lazy = true,
@@ -64,12 +66,23 @@ OPTIONS                                                      *heap-options*
     Set to true to enable background transparency throughout the UI.
     Default: false.
 
+- auto (boolean)
+    Auto-detect installed plugins from lazy.nvim, vim.pack, and mini.deps.
+    When true, only detected integrations are enabled. Default: true.
+
+- cache (boolean)
+    Cache plugin auto-detection results to improve reload performance.
+    Default: true.
+
 - tweak_background (table)
     Fine-grained background overrides (for example: normal, menu, telescope).
     Use value "none" to force transparency for a target.
 
 - plugins (table)
     Enable/disable specific plugin integrations. See |heap-plugins|.
+
+Use |:HeapFetch| to clear Heap cache and reload the colorscheme while
+developing.
 
 ==============================================================================
 PLUGIN SUPPORT                                               *heap-plugins*
@@ -79,12 +92,49 @@ Heap supports many popular plugins out of the box:
 - Lualine (separate theme files included)
 - Telescope
 - Gitsigns
+- Zignite.nvim
 - Lazy.nvim / Mason.nvim
 - Snacks.nvim
 - Trouble
 - Noice
 - Mini.nvim (all modules)
 - Blink.cmp
+
+==============================================================================
+ZIGNITE                                                    *heap-zignite*
+
+Heap defines optional highlight groups for |zignite.nvim|:
+
+- ZigniteBorder
+- ZigniteBorderSuccess
+- ZigniteBorderError
+- ZigniteTitle
+- ZigniteFooter
+
+Use them in zignite config:
+>lua
+    require("zignite.config").setup({
+      float = {
+        border_hl = "ZigniteBorder",
+        border_hl_success = "ZigniteBorderSuccess",
+        border_hl_error = "ZigniteBorderError",
+      },
+    })
+<
+
+==============================================================================
+EXTRAS                                                        *heap-extras*
+
+Heap includes extras for tools outside Neovim:
+
+- fzf
+- Ghostty
+- Kitty
+- Lazygit
+- Yazi
+
+Files are in the `extras/` directory with both `heap` and `heap-dark`
+variants.
 
 ==============================================================================
 LUALINE                                                      *heap-lualine*

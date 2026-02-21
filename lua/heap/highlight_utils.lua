@@ -1,38 +1,61 @@
 -- Highlight utility functions for the Heap theme
 local M = {}
 
--- Function to get background based on transparency options
+---@param opts heap.Config|nil
+---@return boolean
+local function is_transparent(opts)
+	opts = opts or {}
+	if opts.forced_non_transparent == true then
+		return false
+	end
+	return opts.transparent == true or opts.transparent_background == true
+end
+
+-- Function to get background based on transparency options.
+---@param opts heap.Config|nil
+---@return fun(default_bg:string|nil):string|nil
 M.get_background_func = function(opts)
-  -- Use the simplified transparent option as primary, with fallback to transparent_background for backward compatibility
-  -- If forced_non_transparent is true, override all transparency settings
-  local forced_non_transparent = opts.forced_non_transparent or false
-  local transparent = forced_non_transparent and false or (opts.transparent or opts.transparent_background)
-  if transparent then
-    return function(default_bg) return nil end
-  else
-    return function(default_bg) return default_bg or nil end
-  end
+	if is_transparent(opts) then
+		return function(_)
+			return nil
+		end
+	end
+
+	return function(default_bg)
+		return default_bg or nil
+	end
 end
 
--- Function to get background with possible customization
+-- Function to get background with optional `tweak_background` override.
+---@param opts heap.Config|nil
+---@param element_type string
+---@param default_bg string|nil
+---@return string|nil
 M.get_custom_bg = function(opts, element_type, default_bg)
-  local get_bg = M.get_background_func(opts)
-  local custom_bg = opts.tweak_background and opts.tweak_background[element_type]
-  if custom_bg ~= nil then
-    -- If forced_non_transparent is true, override any "none" settings except for menu
-    if opts.forced_non_transparent and custom_bg == "none" and element_type ~= "menu" then
-      return default_bg
-    end
-    return custom_bg == "none" and nil or custom_bg
-  else
-    return get_bg(default_bg)
-  end
+	opts = opts or {}
+
+	local custom_bg = opts.tweak_background and opts.tweak_background[element_type]
+	if custom_bg == nil then
+		return M.get_background_func(opts)(default_bg)
+	end
+
+	if custom_bg == "none" then
+		-- If forced_non_transparent is true, keep actual backgrounds (except menu).
+		if opts.forced_non_transparent and element_type ~= "menu" then
+			return default_bg
+		end
+		return nil
+	end
+
+	return custom_bg
 end
 
--- Determine if undercurl is enabled
+-- Determine if undercurl is enabled.
+---@param opts heap.Config|nil
+---@return boolean
 M.is_undercurl_enabled = function(opts)
-  local undercurl_enabled = not opts.tweak_ui or not opts.tweak_ui.disable_undercurl
-  return undercurl_enabled
+	opts = opts or {}
+	return not (opts.tweak_ui and opts.tweak_ui.disable_undercurl)
 end
 
 return M

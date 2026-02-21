@@ -1,28 +1,8 @@
--- Test runner for Heap theme
--- This script runs all tests for the Heap theme
+local root = vim.fn.fnamemodify(".", ":p")
 
-local M = {}
+vim.opt.runtimepath:prepend(root)
 
--- Run all tests
-M.run_all_tests = function()
-  print("Running Heap theme tests...")
-  
-  -- Run basic tests
-  print("Running basic tests...")
-  require('tests.basic_test')
-  
-  -- Run color contrast tests
-  print("Running color contrast tests...")
-  require('tests.color_contrast_test')
-  
-  print("All tests completed!")
+local plenary_path = root .. "pack/vendor/start/plenary.nvim"
+if vim.uv.fs_stat(plenary_path) then
+	vim.opt.runtimepath:append(plenary_path)
 end
-
--- Run a specific test
-M.run_test = function(test_name)
-  print("Running test: " .. test_name)
-  require('tests.' .. test_name)
-  print("Test completed: " .. test_name)
-end
-
-return M

@@ -12,8 +12,13 @@ vim.g.loaded_heap = true
 
 -- Add the color scheme to Neovim's recognized schemes
 vim.api.nvim_create_user_command("Heap", function()
-	require("heap").setup()
+	require("heap").load()
 end, {
 	desc = "Load Heap theme",
 })
 
+vim.api.nvim_create_user_command("HeapFetch", function()
+	require("heap.utils").reload()
+end, {
+	desc = "Clear Heap cache and reload colorscheme",
+})

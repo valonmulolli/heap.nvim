@@ -1,86 +1,148 @@
 # Heap for Neovim
 
-A clean, modern, and vibrant dark theme for Neovim
+A clean, modern dark colorscheme for Neovim with two dark variants.
 
 ![Heap Themes](./heap&heap-dark.jpg)
 
-## Features
+## Requirements
 
-- **Two Variants**:
-  - `heap`: The classic teal dark theme.
-  - `heap-dark`: A premium sea green/black variant with deep contrast.
-- **Vibrant Statusline**: Custom Lualine themes with high-visibility mode indicators.
-- **Transparency Support**: Simple toggle for a fully transparent UI.
-- **LSP Inlay Hints**: Native Neovim 0.10+ inlay hint support.
-- **Modern Plugin Support**:
-  - **Core**: Treesitter, LSP, Diagnostics
-  - **Fuzzy Finders**: Telescope, fzf-lua
-  - **File Explorers**: NvimTree, Neo-tree, Oil.nvim
-  - **Completion**: Blink.cmp, nvim-cmp
-  - **UI**: Lualine, Bufferline, Noice, nvim-notify, Snacks
-  - **Git**: Gitsigns
-  - **Navigation**: Harpoon, Flash
-  - **Markdown**: render-markdown.nvim
-  - **Other**: Lazy, Mason, Which-key, Trouble, Mini.nvim
+- Neovim `0.10.0+`
 
 ## Installation
 
-### [lazy.nvim](https://github.com/folke/lazy.nvim)
+### lazy.nvim
 
 ```lua
 {
   "valonmulolli/heap-nvim",
   priority = 1000,
   config = function()
-    -- Optional: run setup before loading the colorscheme
-    require('heap').setup({
+    require("heap").setup({
       variant = "default", -- "default" or "dark"
-      transparent = false,
     })
-    vim.cmd.colorscheme('heap')
+    vim.cmd.colorscheme("heap")
   end,
 }
 ```
 
+## Usage
+
+```vim
+:colorscheme heap
+:colorscheme heap-dark
+```
+
 ## Configuration
 
-The `setup()` function is optional. All defaults are balanced for the best experience.
+`setup()` is optional. If omitted, defaults are used.
 
 ```lua
-require('heap').setup({
-  variant = "default",      -- "default" or "dark"
-  transparent = false,      -- Enable transparency
-  cursorline = true,        -- Toggle cursorline
+require("heap").setup({
+  variant = "default", -- "default" or "dark"
+  transparent = false,
+  cursorline = true,
 
-  -- Fine-tune specific UI behaviors
+  -- Auto-detect integrations from lazy.nvim / vim.pack / mini.deps
+  auto = true,
+  -- Cache detected plugin set to stdpath("cache")
+  cache = true,
+
+  -- Backward-compatible transparency flag
+  transparent_background = false,
+
   tweak_ui = {
-    enable_end_of_buffer = true, -- Hide the '~' at the end of buffers
-    disable_undercurl = false,   -- Toggle curly underlines
+    enable_end_of_buffer = true,
+    disable_undercurl = false,
   },
 
-  -- Enable/disable specific plugin integrations
+  tweak_background = {}, -- ex: { normal = "none", menu = "#111111" }
+  tweak_syntax = {},     -- ex: { keyword = "#ff0000" }
+  tweak_highlight = {},  -- direct `vim.api.nvim_set_hl`-style overrides
+
   plugins = {
     telescope = true,
+    which_key = true,
+    dashboard = true,
+    indent_blankline = true,
+    neo_tree = true,
+    trouble = true,
+    noice = true,
+    mini = true,
+    flash = true,
+    blink = true,
+    gitsigns = true,
+    lazy = true,
+    mason = true,
+    snacks = true,
+    notify = true,
+    render_markdown = true,
+    fzf_lua = true,
+    oil = true,
+    harpoon = true,
+    nvim_tree = true,
     bufferline = true,
-    -- ... most popular plugins are true by default
-  }
+  },
 })
 ```
 
-## Lualine Integration
+If you want manual plugin toggles only, set `auto = false`.
 
-To use the matching vibrant Lualine theme:
+## Commands
+
+- `:Heap` loads the theme.
+- `:HeapFetch` clears Heap cache and reloads the colorscheme.
+
+## Lualine
 
 ```lua
-require('lualine').setup({
+require("lualine").setup({
   options = {
-    -- Use 'heap' for :colorscheme heap
-    -- Use 'heap-dark' for :colorscheme heap-dark
-    theme = 'heap',
-  }
+    theme = "heap", -- use "heap-dark" for :colorscheme heap-dark
+  },
 })
 ```
+
+## Extrasx
+
+The `extras/` folder includes:
+
+- `extras/fzf/`
+- `extras/ghostty/`
+- `extras/kitty/`
+- `extras/lazygit/`
+- `extras/yazi/`
+
+Each has `heap` and `heap-dark` variants.
+
+## Project Structure
+
+```text
+.
+├── colors/
+├── extras/
+├── lua/
+│   ├── heap.lua
+│   └── heap/
+│       ├── config.lua
+│       ├── groups/
+│       ├── init.lua
+│       ├── palette/
+│       ├── types/
+│       └── utils.lua
+├── tests/
+├── .github/workflows/
+│   ├── release.yml
+│   └── test.yml
+├── CHANGELOG.md
+└── doc/heap.txt
+```
+
+## CI and Release
+
+- `test.yml`: runs the test suite on pushes and pull requests.
+- `release.yml`: runs release-please on `main`.
+- `CHANGELOG.md`: maintained for releases.
 
 ## License
 
-MIT License. See [LICENSE](./LICENSE) for details.
+MIT License - see [LICENSE](./LICENSE).
