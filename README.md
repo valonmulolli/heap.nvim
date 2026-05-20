@@ -14,7 +14,7 @@ A clean, modern dark colorscheme for Neovim with two dark variants.
 
 ```lua
 {
-  "valonmulolli/heap-nvim",
+  "valonmulolli/heap.nvim",
   priority = 1000,
   config = function()
     require("heap").setup({
@@ -23,6 +23,25 @@ A clean, modern dark colorscheme for Neovim with two dark variants.
     vim.cmd.colorscheme("heap")
   end,
 }
+```
+
+### vim.pack
+
+```lua
+-- In your plugin list:
+vim.pack.add({
+  src = "https://github.com/valonmulolli/heap.nvim",
+  name = "heap.nvim",
+})
+
+-- Then apply:
+vim.cmd.colorscheme("heap")
+```
+
+### Manual (no plugin manager)
+
+```bash
+git clone https://github.com/valonmulolli/heap.nvim ~/.local/share/nvim/site/pack/plugins/start/heap.nvim
 ```
 
 ## Usage
@@ -102,7 +121,7 @@ require("lualine").setup({
 })
 ```
 
-## Extrasx
+## Extras
 
 The `extras/` folder includes:
 
