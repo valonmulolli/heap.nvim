@@ -39,7 +39,7 @@ M.get_custom_bg = function(opts, element_type, default_bg)
 		return M.get_background_func(opts)(default_bg)
 	end
 
-	if custom_bg == "none" then
+	if custom_bg == "none" or custom_bg == "" then
 		-- If forced_non_transparent is true, keep actual backgrounds (except menu).
 		if opts.forced_non_transparent and element_type ~= "menu" then
 			return default_bg

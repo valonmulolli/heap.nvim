@@ -44,14 +44,20 @@ M.apply_syntax_highlights = function(colors, opts)
 		ZigStringDelimiter = { fg = colors.zig_string },
 
 		-- Go-specific syntax groups (Neovim 0.12+ built-in go.vim)
-		GoBuiltins = { fg = colors.library_function },
-		GoField = { fg = colors.property },
-		GoFunctionCall = { fg = colors.function_name },
-		GoParamName = { fg = colors.parameter },
-		GoSpecialString = { fg = colors.string_escape },
-		GoFormatSpecifier = { fg = colors.string_escape },
-		GoReceiverVar = { fg = colors.parameter },
-		GoPointerOperator = { fg = colors.operators },
+		-- NOTE: Names are case-sensitive, lowercase "go" prefix matches go.vim
+		goBuiltins = { fg = colors.library_function },
+		goSpecialString = { fg = colors.string_escape },
+		goFormatSpecifier = { fg = colors.string_escape },
+		-- Opt-in groups (default off, enable via g:go_highlight_*):
+		--   g:go_highlight_fields → goField
+		--   g:go_highlight_function_calls → goFunctionCall
+		--   g:go_highlight_function_parameters → goParamName, goReceiverVar
+		--   g:go_highlight_operators → goPointerOperator
+		goField = { fg = colors.property },
+		goFunctionCall = { fg = colors.function_name },
+		goParamName = { fg = colors.parameter },
+		goReceiverVar = { fg = colors.parameter },
+		goPointerOperator = { fg = colors.operators },
 	}
 
 	for hl_name, hl_def in pairs(syntax_highlights) do
