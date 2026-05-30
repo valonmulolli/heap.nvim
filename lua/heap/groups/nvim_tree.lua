@@ -4,10 +4,6 @@ local highlight_utils = require("heap.highlight_utils")
 local M = {}
 
 M.apply_nvim_tree_highlights = function(colors, opts)
-	if opts.plugins and opts.plugins.nvim_tree == false then
-		return
-	end
-
 	local get_bg = highlight_utils.get_background_func(opts)
 	local get_custom_bg = function(element_type, default_bg)
 		return highlight_utils.get_custom_bg(opts, element_type, default_bg)
@@ -26,12 +22,10 @@ M.apply_nvim_tree_highlights = function(colors, opts)
 	vim.api.nvim_set_hl(0, "NvimTreeFolderIcon", { fg = colors.term_cyan })
 	vim.api.nvim_set_hl(0, "NvimTreeOpenedFolderName", { fg = colors.term_cyan, bold = true })
 
-	if opts.plugins and opts.plugins.nvim_tree then
-		vim.api.nvim_set_hl(0, "NvimTreeFolderName", { fg = colors.term_cyan })
-		vim.api.nvim_set_hl(0, "NvimTreeEmptyFolderName", { fg = colors.fg_dark })
-		vim.api.nvim_set_hl(0, "NvimTreeSymlink", { fg = colors.keyword })
-		vim.api.nvim_set_hl(0, "NvimTreeExecFile", { fg = colors.term_green })
-	end
+	vim.api.nvim_set_hl(0, "NvimTreeFolderName", { fg = colors.term_cyan })
+	vim.api.nvim_set_hl(0, "NvimTreeEmptyFolderName", { fg = colors.fg_dark })
+	vim.api.nvim_set_hl(0, "NvimTreeSymlink", { fg = colors.keyword })
+	vim.api.nvim_set_hl(0, "NvimTreeExecFile", { fg = colors.term_green })
 end
 
 -- Apply bufferline highlights

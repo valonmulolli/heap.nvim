@@ -4,10 +4,6 @@ local highlight_utils = require("heap.highlight_utils")
 local M = {}
 
 M.apply_telescope_highlights = function(colors, opts)
-	if opts.plugins and opts.plugins.telescope == false then
-		return
-	end
-
 	local get_custom_bg = function(element_type, default_bg)
 		return highlight_utils.get_custom_bg(opts, element_type, default_bg)
 	end
