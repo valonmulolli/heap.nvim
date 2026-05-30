@@ -140,7 +140,7 @@ M.setup = function(user_opts)
 
 	-- Heap Dark defaults to non-transparent unless explicitly configured otherwise.
 	if opts.variant == "dark" then
-		if not forced_non_transparent_specified and opts.transparent == false then
+		if not forced_non_transparent_specified and not (opts.transparent or opts.transparent_background) then
 			opts.forced_non_transparent = true
 		end
 	elseif not forced_non_transparent_specified then
