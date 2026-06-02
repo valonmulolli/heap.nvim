@@ -1,4 +1,4 @@
--- Highlight group: completion
+-- Highlight group: nvim-cmp
 local M = {}
 
 M.apply_completion_highlights = function(colors, opts)
@@ -42,7 +42,7 @@ M.apply_completion_highlights = function(colors, opts)
 	end
 end
 
--- Apply telescope highlights
+-- Apply nvim-cmp highlights
 
 function M.apply(colors, opts)
 	M.apply_completion_highlights(colors, opts)

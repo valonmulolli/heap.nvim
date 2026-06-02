@@ -20,6 +20,7 @@ M.default_options = {
 		mini = true,
 		flash = true,
 		blink = true,
+		nvim_cmp = true,
 		gitsigns = true,
 		lazy = true,
 		mason = true,

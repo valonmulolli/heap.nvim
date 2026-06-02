@@ -12,6 +12,7 @@ M.plugin_aliases = {
 	mini = { "mini.nvim" },
 	flash = { "flash.nvim" },
 	blink = { "blink.cmp" },
+	nvim_cmp = { "nvim-cmp" },
 	gitsigns = { "gitsigns.nvim" },
 	lazy = { "lazy.nvim" },
 	mason = { "mason.nvim" },

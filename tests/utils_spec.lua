@@ -7,6 +7,7 @@ local function fresh_opts(overrides)
 		plugins = {
 			telescope = true,
 			blink = true,
+			nvim_cmp = true,
 			gitsigns = true,
 			mini = true,
 		},
@@ -46,12 +47,15 @@ describe("Heap utils", function()
 		assert.is_false(resolved.plugins.gitsigns)
 	end)
 
-	it("auto mode disables plugin toggles when no manager is available", function()
+	it("auto mode disables plugin toggles when no plugins are installed", function()
+		-- In Neovim 0.12+, vim.pack is always available, so we verify plugins
+		-- are disabled because none are actually installed, not because of the
+		-- manager check.
 		local resolved = utils.resolve_plugins(fresh_opts())
-		assert.is_false(resolved.manager_available)
 		assert.is_false(resolved.plugins.telescope)
 		assert.is_false(resolved.plugins.blink)
 		assert.is_false(resolved.plugins.gitsigns)
+		assert.is_false(resolved.plugins.nvim_cmp)
 	end)
 
 	it("detects lazy.nvim plugins", function()

@@ -14,7 +14,7 @@ M.order = {
 	"treesitter",
 	"lsp",
 	"git",
-	"completion",
+	"cmp",
 	"telescope",
 	"nvim_tree",
 	"bufferline",
@@ -43,9 +43,9 @@ function M.setup(colors, opts)
 		loaded.git = true
 	end
 
-	if resolved_opts.plugins.blink then
-		require("heap.groups.completion").apply(colors, resolved_opts)
-		loaded.completion = true
+	if resolved_opts.plugins.nvim_cmp then
+		require("heap.groups.cmp").apply(colors, resolved_opts)
+		loaded.cmp = true
 	end
 
 	if resolved_opts.plugins.telescope then
