@@ -1,16 +1,26 @@
 -- plugin/heap.lua
--- This file makes heap a proper Neovim plugin
 
 if vim.g.loaded_heap then
 	return
 end
 vim.g.loaded_heap = true
 
--- Add documentation for the plugin
--- This helps with the `:help heap` command
--- More documentation can be added in doc/heap.txt
+local heap_augroup = vim.api.nvim_create_augroup("heap", { clear = true })
 
--- Add the color scheme to Neovim's recognized schemes
+-- Re-apply heap highlights after all other ColorScheme handlers have run.
+-- Some plugins register ColorScheme autocommands that override heap's colors;
+-- vim.schedule defers re-application to the next event loop iteration so
+-- heap always wins.
+vim.api.nvim_create_autocmd("ColorScheme", {
+	group = heap_augroup,
+	pattern = { "heap", "heap-dark" },
+	callback = function()
+		vim.schedule(function()
+			require("heap.init").set_highlights()
+		end)
+	end,
+})
+
 vim.api.nvim_create_user_command("Heap", function()
 	require("heap").load()
 end, {
