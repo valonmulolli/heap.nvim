@@ -63,7 +63,7 @@ function M.cache.read(key)
 	end
 
 	local ok, decoded = pcall(vim.json.decode, data, { luanil = { object = true, array = true } })
-	return ok and decoded or nil
+	return ok and type(decoded) == "table" and decoded or nil
 end
 
 ---@param key string
@@ -100,7 +100,7 @@ function M.detect_installed_plugins()
 		if ok and type(packdata) == "table" then
 			managers.vim_pack = true
 			for _, plugin in ipairs(packdata) do
-				if plugin.active and plugin.spec and plugin.spec.name then
+				if type(plugin) == "table" and plugin.spec and type(plugin.spec.name) == "string" then
 					detected[plugin.spec.name] = true
 				end
 			end
@@ -125,6 +125,14 @@ function M.detect_installed_plugins()
 		managers = managers,
 		manager_available = manager_available,
 	}
+end
+
+local function is_valid_cache_payload(payload)
+	return type(payload) == "table"
+		and type(payload.signature) == "string"
+		and type(payload.manager_available) == "boolean"
+		and type(payload.plugin_defaults) == "table"
+		and type(payload.plugins) == "table"
 end
 
 ---@param detected table<string, boolean>
@@ -180,7 +188,8 @@ function M.resolve_plugins(opts)
 	end
 
 	local plugin_defaults = opts.plugins or {}
-	if cache_payload
+	if
+		is_valid_cache_payload(cache_payload)
 		and cache_payload.signature == signature
 		and cache_payload.manager_available == manager_available
 		and vim.deep_equal(cache_payload.plugin_defaults, plugin_defaults)
@@ -230,6 +239,7 @@ function M.resolve_plugins(opts)
 end
 
 function M.reload()
+	local current_options = vim.deepcopy(require("heap.config").options)
 	M.cache.clear()
 	for name, _ in pairs(package.loaded) do
 		if name:match("^heap") then
@@ -237,7 +247,7 @@ function M.reload()
 		end
 	end
 	vim.notify("Heap reloaded", vim.log.levels.WARN)
-	vim.cmd("colorscheme heap")
+	require("heap").setup(current_options)
 end
 
 return M

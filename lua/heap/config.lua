@@ -68,6 +68,21 @@ local function assert_boolean_or_nil(value, name)
 	end
 end
 
+local function assert_string_map_or_nil(value, name)
+	assert_table_or_nil(value, name)
+	if value == nil then
+		return
+	end
+	for key, item in pairs(value) do
+		if type(key) ~= "string" then
+			error("heap.setup: keys in `" .. name .. "` must be strings")
+		end
+		if type(item) ~= "string" then
+			error("heap.setup: values in `" .. name .. "` must be strings")
+		end
+	end
+end
+
 -- Validate user options before merge/apply.
 M.validate_options = function(user_opts)
 	if user_opts == nil then
@@ -78,7 +93,7 @@ M.validate_options = function(user_opts)
 	end
 
 	if user_opts.variant ~= nil and user_opts.variant ~= "default" and user_opts.variant ~= "dark" then
-		error("heap.setup: `variant` must be \"default\" or \"dark\"")
+		error('heap.setup: `variant` must be "default" or "dark"')
 	end
 
 	assert_boolean_or_nil(user_opts.transparent, "transparent")
@@ -88,10 +103,15 @@ M.validate_options = function(user_opts)
 	assert_boolean_or_nil(user_opts.auto, "auto")
 	assert_boolean_or_nil(user_opts.cache, "cache")
 
-	assert_table_or_nil(user_opts.tweak_background, "tweak_background")
-	assert_table_or_nil(user_opts.tweak_syntax, "tweak_syntax")
+	assert_string_map_or_nil(user_opts.tweak_background, "tweak_background")
+	assert_string_map_or_nil(user_opts.tweak_syntax, "tweak_syntax")
 	assert_table_or_nil(user_opts.tweak_ui, "tweak_ui")
 	assert_table_or_nil(user_opts.tweak_highlight, "tweak_highlight")
+
+	if user_opts.tweak_ui then
+		assert_boolean_or_nil(user_opts.tweak_ui.enable_end_of_buffer, "tweak_ui.enable_end_of_buffer")
+		assert_boolean_or_nil(user_opts.tweak_ui.disable_undercurl, "tweak_ui.disable_undercurl")
+	end
 
 	if user_opts.plugins ~= nil then
 		if type(user_opts.plugins) ~= "table" then
@@ -179,6 +199,9 @@ M.apply_syntax_customizations = function(original_colors, opts)
 			-- Validate key and value types
 			if type(syntax_name) ~= "string" then
 				error("heap.config.apply_syntax_customizations: syntax names must be strings")
+			end
+			if type(custom_color) ~= "string" then
+				error("heap.config.apply_syntax_customizations: syntax colors must be strings")
 			end
 			if custom_color ~= "default" and original_colors[syntax_name] then
 				colors[syntax_name] = custom_color

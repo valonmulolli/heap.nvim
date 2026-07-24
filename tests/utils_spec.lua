@@ -18,6 +18,19 @@ local function fresh_opts(overrides)
 	return opts
 end
 
+local function with_pack_entries(entries, callback)
+	local original_pack = vim.pack
+	vim.pack = {
+		get = function()
+			return entries
+		end,
+	}
+	local ok, result = pcall(callback)
+	vim.pack = original_pack
+	assert.is_true(ok, result)
+	return result
+end
+
 describe("Heap utils", function()
 	before_each(function()
 		package.loaded.lazy = nil
@@ -48,10 +61,9 @@ describe("Heap utils", function()
 	end)
 
 	it("auto mode disables plugin toggles when no plugins are installed", function()
-		-- In Neovim 0.12+, vim.pack is always available, so we verify plugins
-		-- are disabled because none are actually installed, not because of the
-		-- manager check.
-		local resolved = utils.resolve_plugins(fresh_opts())
+		local resolved = with_pack_entries({}, function()
+			return utils.resolve_plugins(fresh_opts({ cache = false }))
+		end)
 		assert.is_false(resolved.plugins.telescope)
 		assert.is_false(resolved.plugins.blink)
 		assert.is_false(resolved.plugins.gitsigns)
@@ -59,15 +71,17 @@ describe("Heap utils", function()
 	end)
 
 	it("detects lazy.nvim plugins", function()
-		package.loaded.lazy = true
-		package.loaded["lazy.core.config"] = {
-			plugins = {
-				["telescope.nvim"] = { name = "telescope.nvim" },
-				["blink.cmp"] = { name = "blink.cmp" },
-			},
-		}
+		local resolved = with_pack_entries({}, function()
+			package.loaded.lazy = true
+			package.loaded["lazy.core.config"] = {
+				plugins = {
+					["telescope.nvim"] = { name = "telescope.nvim" },
+					["blink.cmp"] = { name = "blink.cmp" },
+				},
+			}
 
-		local resolved = utils.resolve_plugins(fresh_opts())
+			return utils.resolve_plugins(fresh_opts({ cache = false }))
+		end)
 		assert.is_true(resolved.manager_available)
 		assert.is_true(resolved.plugins.telescope)
 		assert.is_true(resolved.plugins.blink)
@@ -75,18 +89,41 @@ describe("Heap utils", function()
 	end)
 
 	it("uses cached plugin resolution when cache is valid", function()
-		package.loaded.lazy = true
-		package.loaded["lazy.core.config"] = {
-			plugins = {
-				["telescope.nvim"] = { name = "telescope.nvim" },
-			},
-		}
+		local results = with_pack_entries({}, function()
+			package.loaded.lazy = true
+			package.loaded["lazy.core.config"] = {
+				plugins = {
+					["telescope.nvim"] = { name = "telescope.nvim" },
+				},
+			}
 
-		local first = utils.resolve_plugins(fresh_opts())
-		local second = utils.resolve_plugins(fresh_opts())
+			local detected = utils.resolve_plugins(fresh_opts())
+			local cached = utils.resolve_plugins(fresh_opts())
+			return { detected, cached }
+		end)
+		local first, second = results[1], results[2]
 
 		assert.are.same("detected", first.source)
 		assert.are.same("cache", second.source)
 		assert.is_true(second.plugins.telescope)
+	end)
+
+	it("detects inactive vim.pack packages", function()
+		local resolved = with_pack_entries({
+			{ active = false, spec = { name = "telescope.nvim" } },
+		}, function()
+			return utils.resolve_plugins(fresh_opts({ cache = false }))
+		end)
+
+		assert.is_true(resolved.plugins.telescope)
+	end)
+
+	it("ignores malformed cache payloads", function()
+		utils.write(utils.cache.file("plugins"), "42")
+		local resolved = with_pack_entries({}, function()
+			return utils.resolve_plugins(fresh_opts())
+		end)
+
+		assert.are.same("detected", resolved.source)
 	end)
 end)

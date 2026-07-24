@@ -9,15 +9,10 @@ M.apply_plugin_highlights = function(colors, opts)
 		return highlight_utils.get_custom_bg(opts, element_type, default_bg)
 	end
 	if opts.plugins and opts.plugins.telescope then
-		vim.api.nvim_set_hl(
-			0,
-			"TelescopePromptNormal",
-			{
-				fg = colors.fg,
-				bg = get_custom_bg("telescope",
-					highlight_utils.get_background_func(opts)(colors.tab_active_bg))
-			}
-		)
+		vim.api.nvim_set_hl(0, "TelescopePromptNormal", {
+			fg = colors.fg,
+			bg = get_custom_bg("telescope", highlight_utils.get_background_func(opts)(colors.tab_active_bg)),
+		})
 		vim.api.nvim_set_hl(
 			0,
 			"TelescopeResultsNormal",
@@ -28,15 +23,10 @@ M.apply_plugin_highlights = function(colors, opts)
 			"TelescopePreviewNormal",
 			{ fg = colors.fg, bg = get_custom_bg("telescope", highlight_utils.get_background_func(opts)(colors.bg)) }
 		)
-		vim.api.nvim_set_hl(
-			0,
-			"TelescopeSelection",
-			{
-				fg = colors.fg,
-				bg = get_custom_bg("telescope",
-					highlight_utils.get_background_func(opts)(colors.selection_bg))
-			}
-		)
+		vim.api.nvim_set_hl(0, "TelescopeSelection", {
+			fg = colors.fg,
+			bg = get_custom_bg("telescope", highlight_utils.get_background_func(opts)(colors.selection_bg)),
+		})
 		vim.api.nvim_set_hl(0, "TelescopeMultiSelection", { fg = colors.keyword })
 		vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = colors.term_yellow, bold = true })
 	end
@@ -273,19 +263,15 @@ M.apply_plugin_highlights = function(colors, opts)
 	if opts.plugins and opts.plugins.lazy then
 		vim.api.nvim_set_hl(0, "LazyNormal", { bg = get_bg(colors.side_bar_bg), fg = colors.fg })
 		vim.api.nvim_set_hl(0, "LazyButton", { bg = colors.tab_active_bg, fg = colors.fg })
-		vim.api.nvim_set_hl(
-			0,
-			"LazyButtonActive",
-			{ bg = colors.selection_bg, fg = colors.activity_fg, bold = true }
-		)
+		vim.api.nvim_set_hl(0, "LazyButtonActive", { bg = colors.selection_bg, fg = colors.activity_fg, bold = true })
 		vim.api.nvim_set_hl(0, "LazyH1", { fg = colors.sidebar_title_fg, bold = true })
 		vim.api.nvim_set_hl(0, "LazySpecial", { fg = colors.term_blue })
 	end
 
 	-- Mason.nvim support
 	if opts.plugins and opts.plugins.mason then
-		vim.api.nvim_set_hl(0, "MasonNormal", { link = "LazyNormal" })
-		vim.api.nvim_set_hl(0, "MasonHeader", { link = "LazyH1" })
+		vim.api.nvim_set_hl(0, "MasonNormal", { fg = colors.fg, bg = get_bg(colors.side_bar_bg) })
+		vim.api.nvim_set_hl(0, "MasonHeader", { fg = colors.sidebar_title_fg, bold = true })
 		vim.api.nvim_set_hl(0, "MasonHighlight", { fg = colors.term_cyan })
 	end
 

@@ -36,4 +36,18 @@ describe("Heap colorscheme", function()
 		heap.setup({ tweak_syntax = {} })
 		assert.are.same(default_palette.keyword, heap.colors.keyword)
 	end)
+
+	it("validates nested option types before applying highlights", function()
+		local ok, err = pcall(heap.setup, { tweak_syntax = { keyword = false } })
+		assert.is_false(ok)
+		assert.matches("tweak_syntax", tostring(err))
+
+		ok, err = pcall(heap.setup, { tweak_background = { normal = false } })
+		assert.is_false(ok)
+		assert.matches("tweak_background", tostring(err))
+
+		ok, err = pcall(heap.setup, { tweak_ui = { disable_undercurl = "no" } })
+		assert.is_false(ok)
+		assert.matches("disable_undercurl", tostring(err))
+	end)
 end)

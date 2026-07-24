@@ -20,7 +20,7 @@ pkgs.vimUtils.buildVimPlugin {
 
   meta = with pkgs.lib; {
     description = "A dark theme for Neovim based on the Heap VS Code theme";
-    homepage = "https://github.com/valonmulolli/heap-nvim";
+    homepage = "https://github.com/valonmulolli/heap.nvim";
     license = licenses.mit;
     maintainers = [ ];
   };
